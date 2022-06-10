@@ -2,11 +2,14 @@ from functions import *
 import asyncio
 
 async def main():
-	#turn on ac if weather >85
-	weather = await getweather()
-	current_temp = int(weather['current_temp'])
+	#turn on ac if weather >setpoint
+
+	#load config
+	config = load_config()
+	weather = await getweather(config['location'])
+	current_temp = weather['current_temp']
 	print(f"current temp is :{current_temp}")
-	if current_temp > 85:
+	if current_temp > config['setpoint']:
 		print("setting device on")
 		set_device_state(True)
 	else:
